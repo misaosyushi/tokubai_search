@@ -8,9 +8,12 @@ soup = BeautifulSoup(r.text, "html.parser")
 
 special_sales = []
 
+# price_unit_and_production_area ユニット
+# number 値段
+
 elems = soup.select('.name.hoverable_link')
 for elem in elems:
     print(elem.text)
-    special_sales.append(elem.text)
+    special_sales.append(elem.text.strip("\n"))
 
 print(special_sales)
