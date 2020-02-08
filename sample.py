@@ -8,12 +8,23 @@ soup = BeautifulSoup(r.text, "html.parser")
 
 special_sales = []
 
-# price_unit_and_production_area ユニット
-# number 値段
+item_names = soup.select('.name.hoverable_link')
 
-elems = soup.select('.name.hoverable_link')
-for elem in elems:
-    print(elem.text)
-    special_sales.append(elem.text.strip("\n"))
+for name in item_names:
+    special_sales.append({"name": name.text.strip("\n")})
+
+units = soup.select('.price_unit_and_production_area')
+
+for i in (range(len(units))):
+    if i < len(special_sales):
+        unit = units[i]
+        special_sales[i]["unit"] = unit.text.strip("\n")
+
+prices = soup.select('.number')
+
+for i in range(len(prices)):
+    if i < len(special_sales):
+        price = prices[i]
+        special_sales[i]["price"] = price.text.strip("\n")
 
 print(special_sales)
