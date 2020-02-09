@@ -1,8 +1,11 @@
+import re
+import uuid
+
 import requests
 from bs4 import BeautifulSoup
 
-target_url = 'https://tokubai.co.jp/%E8%A5%BF%E5%8F%8B/6386?content_type=product_summary&from' \
-             '=widget_supermarket_300x250&shop_id=6386&target_type=see_more '
+target_url = 'https://tokubai.co.jp/%E8%A5%BF%E5%8F%8B/6386'
+
 r = requests.get(target_url)
 soup = BeautifulSoup(r.text, "html.parser")
 
@@ -26,5 +29,15 @@ for i in range(len(prices)):
     if i < len(special_sales):
         price = prices[i]
         special_sales[i]["price"] = price.text.strip("\n")
+
+# TODO: LazyLoadの画像が取れていない
+# images = soup.find_all('img', src=re.compile('^https://image.tokubai.co.jp/images/bargain_images/'))
+# print(images)
+
+# for img in images:
+#     print(img['src'])
+#     r = requests.get(img['src'])
+#     with open(str('./picture/')+str(uuid.uuid4())+str('.jpeg'), 'wb') as file:
+#         file.write(r.content)
 
 print(special_sales)
