@@ -1,1 +1,6 @@
 .idea
+bin
+*.zip
+selenium*
+urllib3*
+__pycache__
